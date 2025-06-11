@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Live GPT Chatbot Demo | Order Your Custom AI Chatbot | Adam Matthew Steinberger</title>
+    <meta name="description" content="Test a live demo of a private, branded GPT chatbot trained on real data. Learn how to get a custom AI assistant for your business, nonprofit, or internal team.">
+    <meta name="keywords" content="live GPT chatbot demo, custom AI chatbot, branded GPT assistant, chatbot for websites, AI chatbot builder, OpenAI demo, private chatbot, nonprofit AI, business AI, GPT chat UI, internal knowledge assistant, Adam Matthew Steinberger chatbot, Slack AI bot, AI support assistant">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://chat.adam.matthewsteinberger.com/" />
+    <meta property="og:title" content="Live GPT Chatbot Demo | Adam Matthew Steinberger">
+    <meta property="og:description" content="Try a live branded AI chatbot demo. See how custom GPTs can automate support, qualify leads, or power internal tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chat.adam.matthewsteinberger.com/">
+    <meta property="og:image" content="https://chat.adam.matthewsteinberger.com/social-preview.png">
+    <meta property="og:site_name" content="Adam Matthew Steinberger">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Live Custom Chatbot Demo | Built by Adam Matthew Steinberger">
+    <meta name="twitter:description" content="Experience a secure, powerful GPT chatbot trained on real data. Available for businesses, ministries, and internal teams.">
+    <meta name="twitter:image" content="https://chat.adam.matthewsteinberger.com/social-preview.png">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Live Custom GPT Chatbot Demo",
+            "@id": "https://chat.adam.matthewsteinberger.com",
+            "url": "https://chat.adam.matthewsteinberger.com",
+            "provider": {
+                "@type": "Person",
+                "name": "Adam Matthew Steinberger",
+                "email": "adam@matthewsteinberger.com",
+                "url": "https://hire.adam.matthewsteinberger.com"
+            },
+            "serviceType": [
+                "Live AI Chatbot Demo",
+                "Custom GPT Chatbot Development",
+                "Private AI Assistants",
+                "Slack + GPT Integration",
+                "Nonprofit Chatbot Solutions"
+            ],
+            "areaServed": "Worldwide",
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "USD",
+                "price": "0.00",
+                "description": "Free demo of a fully branded GPT chatbot. Explore what's possible with AI tailored to your data and goals."
+            }
+        }
+    </script>
+    <meta name="author" content="Adam Matthew Steinberger">
+    <meta name="theme-color" content="#101828">
+    <meta name="language" content="en-US">
+    <meta name="copyright" content="© Copyright 2025 Adam Matthew Steinberger LLC. All Rights Reserved.">
+    <link rel="alternate" hreflang="en" href="https://chat.adam.matthewsteinberger.com/" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css">
+    <meta name="recaptcha-site-key" content="6LfJ1lorAAAAAFPVzxB-aKoU19N-TWNrJsoeRnQw">
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfJ1lorAAAAAFPVzxB-aKoU19N-TWNrJsoeRnQw"></script>
+    <script src="marked.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P4CX07CNRW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-P4CX07CNRW');
+    </script>
+</head>
+<body>
+    <main id="chat-main">
+        <header id="chat-header">
+            <h1>Adam.ai Custom Chatbot</h1>
+        </header>
+        <section id="chat-box"></section>
+        <form id="chat-form" autocomplete="off" onsubmit="event.preventDefault(); sendMessage();">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" />
+            <button type="submit">Send</button>
+            <input type="text" id="math-challenge" name="math-challenge" class="math-challenge" autocomplete="off" />
+            <input type="hidden" id="recaptcha-token" name="recaptcha-token" />
+        </form>
+        <footer id="chat-footer">
+            <p style="text-align:center; color:#888; font-size:0.95em; margin: 0.5em 0 0 0;">
+                © Copyright 2025 <a href="https://hire.adam.matthewsteinberger.com" target="_blank">Adam Matthew Steinberger LLC</a>. All Rights Reserved.
+            </p>
+        </footer>
+    </main>
+    <script src="main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const chatBox = document.getElementById('chat-box');
+        const welcomeMsg = document.createElement('div');
+        welcomeMsg.className = 'bot-message';
+        welcomeMsg.textContent = "Hello, how may I help you today?";
+        chatBox.appendChild(welcomeMsg);
+      });
+    </script>
+</body>
+</html>
