@@ -66,7 +66,7 @@ async function sendMessage() {
 
     const data = await response.json();
     const reply = data.response?.candidates?.[0]?.content?.parts?.[0]?.text || data.error || "No response.";
-    addMessageToChat("Adam.ai", reply, true);
+    addMessageToChat("Adam's AI", reply, true);
 }
 
 // Add ENTER key handler for input
