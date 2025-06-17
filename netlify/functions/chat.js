@@ -1,18 +1,115 @@
 const fetch = require("node-fetch");
 
-exports.handler = async function(event, context) {
-  let prompt, mathChallenge, recaptchaToken;
+// Function to determine if a prompt likely needs web search
+function shouldPerformWebSearch(prompt) {
+  // Get the last line of the prompt (the actual question)
+  const actualQuestion = prompt.split('\n').pop() || prompt;
+  
+  const searchIndicators = [
+    "search",
+    "find",
+    "look up",
+    "what is",
+    "tell me about",
+    "current",
+    "latest",
+    "news",
+    "recent"
+  ];
+  
+  return searchIndicators.some(indicator => 
+    actualQuestion.toLowerCase().includes(indicator.toLowerCase())
+  );
+}
+
+// Function to clean the search query
+function cleanSearchQuery(query) {
+  // Extract the actual question from the full text
+  let cleanQuery = query;
+  
+  // If it contains "User question:", take everything after it
+  const questionMatch = query.match(/User question:\s*(.*?)(?:\n|$)/i);
+  if (questionMatch) {
+    cleanQuery = questionMatch[1];
+  } else {
+    // Otherwise just take the last non-empty line
+    const lines = query.split('\n').filter(line => line.trim());
+    if (lines.length > 0) {
+      cleanQuery = lines[lines.length - 1];
+    }
+  }
+  
+  // Clean up the query
+  cleanQuery = cleanQuery
+    .replace(/^(Question:|User:|Q:)\s*/i, '') // Remove any remaining prefixes
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .trim();
+  
+  // Return cleaned query or default
+  return cleanQuery || 'help';
+}
+
+// Function to perform web search
+async function performWebSearch(query) {
   try {
-    ({ prompt, mathChallenge, recaptchaToken } = JSON.parse(event.body));
+    // Check for required API credentials
+    const apiKey = process.env.GOOGLE_SEARCH_API_KEY;
+    const searchEngineId = process.env.GOOGLE_SEARCH_ENGINE_ID;
+    
+    if (!apiKey || !searchEngineId) {
+      console.error('Missing Google Search API credentials');
+      return [];
+    }
+
+    // Clean and prepare the search terms
+    const searchTerms = cleanSearchQuery(query);
+    
+    // Create the URL with the correct parameters
+    const params = new URLSearchParams({
+      key: apiKey,
+      cx: searchEngineId,
+      q: searchTerms,
+      num: 5 // Number of results to return
+    });
+    
+    const url = `https://www.googleapis.com/customsearch/v1?${params.toString()}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Google Search API error:', data.error?.message || response.statusText);
+      return [];
+    }
+
+    // Format the search results
+    if (data.items && data.items.length > 0) {
+      const searchResults = data.items.map(item => ({
+        title: item.title,
+        snippet: item.snippet,
+        url: item.link
+      }));
+      
+      return searchResults;
+    }
+
+    return [];
+  } catch (error) {
+    console.error("Search error:", error);
+    return [];
+  }
+}
+
+exports.handler = async function(event, context) {
+  let prompt, mathChallenge;
+  try {
+    ({ prompt, mathChallenge } = JSON.parse(event.body));
   } catch (e) {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: "Invalid request body." })
     };
   }
-
-  // Check if reCAPTCHA is enabled via environment variable
-  const recaptchaEnabled = process.env.RECAPTCHA_ENABLED === 'true';
 
   // Honeypot spam check
   if (mathChallenge && mathChallenge.trim() !== "") {
@@ -22,41 +119,34 @@ exports.handler = async function(event, context) {
     };
   }
 
-  // reCAPTCHA v3 verification (only if enabled)
-  if (recaptchaEnabled) {
-    const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-    if (!recaptchaToken || !recaptchaSecret) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "Missing reCAPTCHA token or secret." })
-      };
-    }
-    try {
-      const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `secret=${recaptchaSecret}&response=${recaptchaToken}`
-      });
-      const recaptchaData = await recaptchaRes.json();
-      if (!recaptchaData.success || recaptchaData.score < 0.5) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ error: "Failed reCAPTCHA verification." })
-        };
-      }
-    } catch (e) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "reCAPTCHA verification failed." })
-      };
-    }
-  }
-
   if (!prompt || typeof prompt !== "string" || prompt.trim() === "") {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: "Missing or invalid prompt." })
     };
+  }
+
+  // Perform web search if needed
+  let searchResults = [];
+  if (shouldPerformWebSearch(prompt)) {
+    try {
+      const results = await performWebSearch(prompt);
+      if (Array.isArray(results)) {
+        searchResults = results;
+      }
+    } catch (error) {
+      console.error("Error during web search:", error);
+      // Continue without search results
+    }
+  }
+
+  // Modify prompt to include search results if available
+  let enhancedPrompt = prompt;
+  if (searchResults && searchResults.length > 0) {
+    const searchContext = searchResults
+      .map(result => `Title: ${result.title}\nSummary: ${result.snippet}\nSource: ${result.url}`)
+      .join('\n\n');
+    enhancedPrompt = `Web Search Results:\n\n${searchContext}\n\nUser question: ${prompt}\n\nPlease provide a clear, informative answer based on these search results. Focus on relevant information and include source attributions where appropriate.`;
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
@@ -71,7 +161,7 @@ exports.handler = async function(event, context) {
   const payload = {
     contents: [
       {
-        parts: [{ text: prompt }]
+        parts: [{ text: enhancedPrompt }]
       }
     ]
   };
