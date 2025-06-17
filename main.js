@@ -46,9 +46,12 @@ function formatConversationHistory() {
     }
     
     // Format as a string
-    return historyToInclude.map(entry => 
-        `${entry.role}: ${entry.message}`
-    ).join('\n');
+    return historyToInclude.map(entry => {
+        // Only include the role prefix for user messages
+        return entry.role === 'You' ? 
+            `${entry.role}: ${entry.message}` :
+            entry.message;
+    }).join('\n');
 }
 
 async function loadDocuments() {
@@ -105,12 +108,19 @@ async function sendMessage() {
         // Always include all document chunks
         const contextText = documents.map(doc => doc.text).join("\n---\n");
 
-        // Compose prompt with instructions, all documents, and user question
+        // Compose prompt with instructions, documents, and user question
         // Get conversation history
         const conversationText = formatConversationHistory();
 
         // Compose prompt with instructions, documents, conversation history, and user question
-        const prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nConversation History:\n${conversationText}\n\nUser question: ${userText}`;
+        let prompt;
+        if (conversationText.trim()) {
+            // If there's conversation history, include it
+            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nConversation History:\n${conversationText}\n\nUser question: ${userText}`;
+        } else {
+            // If no conversation history, keep it simple
+            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nUser question: ${userText}`;
+        }
 
         // Call Netlify function with math challenge
         const response = await fetch("/.netlify/functions/chat", {
