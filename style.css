@@ -160,6 +160,43 @@ body > div[style*="recaptcha"] {
     top: -9999px !important;
     visibility: hidden !important;
 }
+.thinking-animation {
+    margin: 0.5em 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.thinking-animation.hidden {
+    display: none;
+}
+
+.thinking-animation .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4a4f5c;
+    border-radius: 50%;
+    animation: thinking 1.4s infinite;
+}
+
+.thinking-animation .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.thinking-animation .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes thinking {
+    0%, 100% {
+        transform: scale(0.7);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 @media (max-width: 700px) {
     html, body, #chat-main {
         height: 100dvh;

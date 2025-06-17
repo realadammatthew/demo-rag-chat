@@ -56,8 +56,6 @@
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="style.css">
-    <meta name="recaptcha-site-key" content="6LfJ1lorAAAAAFPVzxB-aKoU19N-TWNrJsoeRnQw">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfJ1lorAAAAAFPVzxB-aKoU19N-TWNrJsoeRnQw"></script>
     <script src="marked.min.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P4CX07CNRW"></script>
     <script>
@@ -73,11 +71,15 @@
             <h1>Adam's AI Custom Chatbot</h1>
         </header>
         <section id="chat-box"></section>
+        <div id="thinking-animation" class="thinking-animation hidden">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
         <form id="chat-form" autocomplete="off" onsubmit="event.preventDefault(); sendMessage();">
             <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" />
             <button type="submit">Send</button>
             <input type="text" id="math-challenge" name="math-challenge" class="math-challenge" autocomplete="off" />
-            <input type="hidden" id="recaptcha-token" name="recaptcha-token" />
         </form>
         <footer id="chat-footer">
             <p style="text-align:center; color:#888; font-size:0.95em; margin: 0.5em 0 0 0;">
