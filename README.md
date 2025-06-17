@@ -1,14 +1,16 @@
 # demo-rag-chat
 
-A simple Retrieval-Augmented Generation (RAG) chat demo using Google Gemini API, Netlify Functions, and a static frontend.
+A simple Retrieval-Augmented Generation (RAG) chat demo using Google Gemini API, Netlify Functions, and a static frontend with web search.
 
 ## Features
 
 - Chat UI for asking questions about a sample topic.
 - Retrieves relevant document snippets from a local JSON knowledge base (`documents.json`).
+- Performs web searches using Google Custom Search API for questions requiring current information.
 - Sends context-augmented prompts to the Gemini API via a Netlify serverless function.
 - Displays AI-generated answers in the chat interface.
-- Integrates reCAPTCHA v3 and simple honeypot mechanism for bot/spam protection.
+- Includes a simple honeypot mechanism for bot/spam protection.
+- Smart query detection to determine when web search is needed.
 
 ## Project Structure
 
@@ -45,17 +47,15 @@ style.css # Basic styling
     npm install
     ```
 
-3. **Set up your Gemini API key and reCAPTCHA**
+3. **Set up your API keys**
 
-    Copy your Gemini API key and reCAPTCHA secret key into a .env file in the root directory:
+    Copy your API keys into a .env file in the root directory:
     
     ```sh
     GEMINI_API_KEY=your-gemini-api-key-here
-    RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key-here
-    RECAPTCHA_ENABLED=true
+    GOOGLE_SEARCH_API_KEY=your-google-api-key-here
+    GOOGLE_SEARCH_ENGINE_ID=your-google-search-engine-id-here
     ```
-
-    Also, set your reCAPTCHA v3 site key in `index.html` (see the `<meta name="recaptcha-site-key">` and script tag).
 
 4. **Run locally with Netlify CLI**
 
@@ -83,39 +83,36 @@ style.css # Basic styling
 ## How it Works
 
 - `main.js`: Loads custom prompt instructions and custom dataset, requests a reCAPTCHA v3 token, and sends a prompt to the backend.
-- `netlify/functions/chat.js`: Receives the prompt, verifies the reCAPTCHA token, calls the Gemini API, and returns the AI's response.
+- `netlify/functions/chat.js`: Receives the prompt, verifies the reCAPTCHA token, performs web search when needed, calls the Gemini API with enhanced context, and returns the AI's response.
 - `documents.json`: Contains sample data for retrieval.
 - `instructions.md`: Contains custom prompt instructions for the chatbot.
 - `index.html` and `style.css`: Provide the chat UI.
 
+The application now includes intelligent web search capabilities:
+- Automatically detects when a question might benefit from current web information
+- Uses Google Custom Search API to fetch relevant search results
+- Enhances prompts with search results for better context
+- Maintains original RAG capabilities for static knowledge base queries
+
 ## Anti-Spam Protection
 
-This demo uses a hidden honeypot field and reCAPTCHA v3 for spam prevention. The honeypot field is visually hidden from users but may be filled by bots. If the honeypot is filled, the backend will silently reject the request as spam. reCAPTCHA v3 is used to further protect against automated abuse. No user interaction is required, and there are no CAPTCHAs or visible challenges.
-
-## Test reCAPTCHA Keys
-
-This demo uses public test keys for reCAPTCHA v3, which are safe for development and testing purposes:
-
-- **Site Key:** `6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI`
-- **Secret Key:** `6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe`
-
-You can use these keys locally or in your own test deployments. For production, generate your own keys at [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin/create).
+This demo uses a hidden honeypot field for spam prevention. The honeypot field is visually hidden from users but may be filled by bots. If the honeypot is filled, the backend will silently reject the request as spam.
 
 ## Customizing Bot Behavior
 
-You can control the NovaEdge chatbot's behavior and guardrails by editing the `instructions.md` file in the project root. The contents of this file are automatically prepended to every prompt sent to the Gemini API.
+You can control the chatbot's behavior and guardrails by editing the `instructions.md` file in the project root. The contents of this file are automatically prepended to every prompt sent to the Gemini API.
 
 **How it works:**
 - Edit `instructions.md` to add, remove, or change instructions for the bot.
-- The file supports Markdown, but only the bullet points (not headings or comments) are sent to the AI.
-- Example guardrails include how to handle confidential questions, off-topic prompts, or how to represent NovaEdge.
+- The file supports Markdown, and all contents are sent to the AI.
+- Example guardrails include how to handle confidential questions, off-topic prompts, or how to represent the company.
 - Changes take effect immediately on the next chat request—no server restart needed.
 
 This makes it easy to experiment with different bot personalities, compliance guardrails, or company messaging.
 
 ## Deployment
 
-- Deploy to Netlify by connecting your repository and setting the `GEMINI_API_KEY`, `RECAPTCHA_SECRET_KEY` and `RECAPTCHA_ENABLED` environment variables in the Netlify dashboard.
+- Deploy to Netlify by connecting your repository and setting the `GEMINI_API_KEY`, `GOOGLE_SEARCH_API_KEY` and `GOOGLE_SEARCH_ENGINE_ID` environment variables in the Netlify dashboard.
 
 ## Notes
 
