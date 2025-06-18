@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:geo="http://www.google.com/geo/schemas/sitemap/1.0">
   <url>
-    <loc>https://chat.adam.matthewsteinberger.com/index.html</loc>
-    <lastmod>2025-06-10</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://chat.adam.matthewsteinberger.com/</loc>
+    <lastmod>2025-06-17</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <geo:geo>
+      <geo:format>kml</geo:format>
+      <geo:lat>35.9800</geo:lat>
+      <geo:long>-78.5150</geo:long>
+    </geo:geo>
+    <news:news>
+      <news:publication>
+        <news:name>Adam Matthew Steinberger LLC / AI Solutions</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2025-06-17</news:publication_date>
+      <news:title>Custom AI Chatbots in Wake Forest, NC - Live Demo</news:title>
+    </news:news>
   </url>
 </urlset>
