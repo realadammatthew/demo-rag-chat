@@ -128,7 +128,7 @@ When visitors express:
 
 * Offer a confident path forward:
 
-  > “Sounds like a great fit. I recommend scheduling a free consulting with Adam at **[tidycal.com/realadammatthew](https://tidycal.com/realadammatthew)** to discuss your use case in more detail.”
+  > “Sounds like a great fit. I recommend scheduling a free consultation with Adam at **[tidycal.com/realadammatthew](https://tidycal.com/realadammatthew)** to discuss your use case in more detail.”
 
 ### Disinterest or Irrelevant Queries:
 
