@@ -1,4 +1,5 @@
 let documents = [];
+let corpus = [];
 let conversationHistory = [];
 const MAX_HISTORY = 50; // 50 exchanges (100 messages total)
 
@@ -59,6 +60,11 @@ async function loadDocuments() {
     documents = await response.json();
 }
 
+async function loadCorpus() {
+    const response = await fetch("corpus.json");
+    corpus = await response.json();
+}
+
 // Show/hide thinking animation
 function showThinking() {
     document.getElementById('thinking-animation').classList.remove('hidden');
@@ -108,6 +114,9 @@ async function sendMessage() {
         // Always include all document chunks
         const contextText = documents.map(doc => doc.text).join("\n---\n");
 
+        // Always include all corpus chunks
+        const corpusText = corpus.map(doc => `Q: ${doc.prompt}\nA: ${doc.response}`).join("\n---\n");
+
         // Compose prompt with instructions, documents, and user question
         // Get conversation history
         const conversationText = formatConversationHistory();
@@ -116,10 +125,10 @@ async function sendMessage() {
         let prompt;
         if (conversationText.trim()) {
             // If there's conversation history, include it
-            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nConversation History:\n${conversationText}\n\nUser question: ${userText}`;
+            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nCorpus:\n${corpusText}\n\nConversation History:\n${conversationText}\n\nUser question: ${userText}`;
         } else {
             // If no conversation history, keep it simple
-            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nUser question: ${userText}`;
+            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nCorpus:\n${corpusText}\n\nUser question: ${userText}`;
         }
 
         // Call Netlify function with math challenge
@@ -133,7 +142,7 @@ async function sendMessage() {
         const reply = data.response?.candidates?.[0]?.content?.parts?.[0]?.text || data.error || "No response.";
         addMessageToChat("Adam's AI", reply, true);
     } catch (error) {
-        console.error('Error:', error);
+        console.error('An error occurred while processing your request.');
         addMessageToChat("Adam's AI", "I apologize, but I encountered an error while processing your request. Please try again.", true);
     } finally {
         hideThinking();
@@ -143,6 +152,7 @@ async function sendMessage() {
 // Add ENTER key handler for input
 window.onload = function() {
     loadDocuments();
+    loadCorpus();
     loadConversationHistory();
     const input = document.getElementById("user-input");
     input.addEventListener("keydown", function(e) {
