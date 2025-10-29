@@ -1,164 +1,94 @@
-let documents = [];
-let corpus = [];
 let conversationHistory = [];
-const MAX_HISTORY = 50; // 50 exchanges (100 messages total)
+const MAX_HISTORY = 50;
 
-// Load and manage conversation history
+// Load/Save history
 function loadConversationHistory() {
-    const saved = localStorage.getItem('chatHistory');
-    if (saved) {
-        const fullHistory = JSON.parse(saved);
-        // Always take only the most recent MAX_HISTORY * 2 messages
-        conversationHistory = fullHistory.slice(-MAX_HISTORY * 2);
-        // Update storage if we trimmed anything
-        if (fullHistory.length !== conversationHistory.length) {
-            saveConversationHistory();
-        }
-    }
+  const saved = localStorage.getItem('chatHistory');
+  if (saved) {
+    const full = JSON.parse(saved);
+    conversationHistory = full.slice(-MAX_HISTORY * 2);
+    if (full.length !== conversationHistory.length) saveConversationHistory();
+  }
 }
 
-// Save conversation history to localStorage
 function saveConversationHistory() {
-    localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
+  localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
 }
 
-// Add a message to the conversation history
 function addToConversationHistory(role, message) {
-    // Add new message
-    conversationHistory.push({ role, message });
-    
-    // Trim if needed
-    if (conversationHistory.length > MAX_HISTORY * 2) {
-        conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
-    }
-    
-    // Save the updated history
-    saveConversationHistory();
+  conversationHistory.push({ role, message });
+  if (conversationHistory.length > MAX_HISTORY * 2) {
+    conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
+  }
+  saveConversationHistory();
 }
 
-// Format the conversation history for prompting
 function formatConversationHistory() {
-    // Get all except the last message (current question)
-    let historyToInclude = conversationHistory.slice(0, -1);
-    
-    // Ensure we're within limits
-    if (historyToInclude.length > MAX_HISTORY * 2) {
-        historyToInclude = historyToInclude.slice(-MAX_HISTORY * 2);
-    }
-    
-    // Format as a string
-    return historyToInclude.map(entry => {
-        // Only include the role prefix for user messages
-        return entry.role === 'You' ? 
-            `${entry.role}: ${entry.message}` :
-            entry.message;
-    }).join('\n');
+  return conversationHistory.slice(0, -1)
+    .map(entry => entry.role === 'You' ? `${entry.role}: ${entry.message}` : entry.message)
+    .join('\n');
 }
 
-async function loadDocuments() {
-    const response = await fetch("documents.json");
-    documents = await response.json();
-}
-
-async function loadCorpus() {
-    const response = await fetch("corpus.json");
-    corpus = await response.json();
-}
-
-// Show/hide thinking animation
 function showThinking() {
-    document.getElementById('thinking-animation').classList.remove('hidden');
+  document.getElementById('thinking-animation').classList.remove('hidden');
 }
 
 function hideThinking() {
-    document.getElementById('thinking-animation').classList.add('hidden');
+  document.getElementById('thinking-animation').classList.add('hidden');
 }
 
 function addMessageToChat(sender, message, isMarkdown = false) {
-    const chatBox = document.getElementById("chat-box");
-    const msgDiv = document.createElement("div");
-    if (isMarkdown && window.marked) {
-        msgDiv.innerHTML = `<strong>${sender}:</strong> ` + marked.parse(message);
-    } else {
-        msgDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
-    }
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    
-    // Add to conversation history
-    addToConversationHistory(sender, message);
+  const chatBox = document.getElementById("chat-box");
+  const div = document.createElement("div");
+  div.innerHTML = isMarkdown && window.marked
+    ? `<strong>${sender}:</strong> ${marked.parse(message)}`
+    : `<strong>${sender}:</strong> ${message}`;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+  addToConversationHistory(sender, message);
 }
 
 async function sendMessage() {
-    showThinking();
-    try {
-        const input = document.getElementById("user-input");
-        const mathChallenge = document.getElementById("math-challenge");
-        const userText = input.value;
-        const mathChallengeValue = mathChallenge.value;
-        input.value = "";
-        mathChallenge.value = "";
-        addMessageToChat("You", userText);
+  showThinking();
+  try {
+    const input = document.getElementById("user-input");
+    const math = document.getElementById("math-challenge");
+    const userText = input.value.trim();
+    const mathVal = math.value;
 
-        // Fetch instructions from instructions.md
-        let instructions = "";
-        try {
-            const res = await fetch("instructions.md");
-            if (res.ok) {
-                instructions = await res.text();
-            }
-        } catch (e) {
-            instructions = "";
-        }
+    if (!userText) return;
 
-        // Always include all document chunks
-        const contextText = documents.map(doc => doc.text).join("\n---\n");
+    input.value = "";
+    math.value = "";
+    addMessageToChat("You", userText);
 
-        // Always include all corpus chunks
-        const corpusText = corpus.map(doc => `Q: ${doc.prompt}\nA: ${doc.response}`).join("\n---\n");
+    const history = formatConversationHistory();
+    const prompt = history ? `${history}\nUser question: ${userText}` : userText;
 
-        // Compose prompt with instructions, documents, and user question
-        // Get conversation history
-        const conversationText = formatConversationHistory();
+    const res = await fetch("/.netlify/functions/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt, mathChallenge: mathVal })
+    });
 
-        // Compose prompt with instructions, documents, conversation history, and user question
-        let prompt;
-        if (conversationText.trim()) {
-            // If there's conversation history, include it
-            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nCorpus:\n${corpusText}\n\nConversation History:\n${conversationText}\n\nUser question: ${userText}`;
-        } else {
-            // If no conversation history, keep it simple
-            prompt = `Instructions:\n${instructions}\n\nDocuments:\n${contextText}\n\nCorpus:\n${corpusText}\n\nUser question: ${userText}`;
-        }
-
-        // Call Netlify function with math challenge
-        const response = await fetch("/.netlify/functions/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt, mathChallenge: mathChallengeValue })
-        });
-
-        const data = await response.json();
-        const reply = data.response?.candidates?.[0]?.content?.parts?.[0]?.text || data.error || "No response.";
-        addMessageToChat("Adam's AI", reply, true);
-    } catch (error) {
-        console.error('An error occurred while processing your request.');
-        addMessageToChat("Adam's AI", "I apologize, but I encountered an error while processing your request. Please try again.", true);
-    } finally {
-        hideThinking();
-    }
+    const data = await res.json();
+    const reply = data.response || data.error || "Sorry, something went wrong.";
+    addMessageToChat("Adam's AI", reply, true);
+  } catch (err) {
+    addMessageToChat("Adam's AI", "I encountered an error. Please try again.", true);
+  } finally {
+    hideThinking();
+  }
 }
 
-// Add ENTER key handler for input
+// Init
 window.onload = function() {
-    loadDocuments();
-    loadCorpus();
-    loadConversationHistory();
-    const input = document.getElementById("user-input");
-    input.addEventListener("keydown", function(e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            sendMessage();
-        }
-    });
+  loadConversationHistory();
+  const input = document.getElementById("user-input");
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 };

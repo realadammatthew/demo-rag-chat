@@ -1,0 +1,194 @@
+[
+  {
+    "keyword": "owner - contact",
+    "text": "Adam Matthew Steinberger is based in Greenville, SC. Contact him at +1-864-517-4117 or adam@matthewsteinberger.com. Schedule a free consultation at tidycal.com/realadammatthew. Find him online: hire.adam.matthewsteinberger.com | chat.adam.matthewsteinberger.com | linkedin.com/in/realadammatthew | github.com/realadammatthew | x.com/realadammatthew | coff.ee/realadammatthew."
+  },
+  {
+    "keyword": "owner - summary",
+    "text": "Staff Software Engineer and AI Solutions Architect with 12+ years of experience designing secure, scalable systems across AI, enterprise automation, and financial technology. Specializes in end-to-end solution delivery: process engineering, requirements analysis, architectural design, implementation, and team enablement. Expert in building custom Retrieval-Augmented Generation (RAG) systems using self-hosted or cloud-based LLMs, event-driven microservices, and production platforms integrating Azure Service Bus, Microsoft Graph, and third-party APIs. Transforms complex business problems into documented, executable solutions that empower junior and mid-level teams to deliver independently."
+  },
+  {
+    "keyword": "owner - skills",
+    "text": "AI & ML: RAG Architecture, Vector Databases (FAISS), LLM Orchestration, ChatGPT, Claude, Prompt/Context Engineering, AI Agents, HITL Workflows. Languages: Python, JavaScript, C#, NestJS, Flask, .NET WebAPI, React, Next.js. Databases: PostgreSQL, Snowflake, SQL Server, Vector Stores. Cloud & Infra: Azure (Service Bus, Functions, Storage), AWS, Docker, Ubuntu Server, CI/CD, Microservices. Integration: Microsoft Graph API, REST/gRPC, Webhooks, ETL Pipelines, Job Schedulers. Methodologies: Process Engineering, Solutions Architecture, Technical Documentation, Agile/Scrum, Team Enablement. Privacy: Proton, Ubuntu, GrapheneOS, System76, Warp, Claude Code."
+  },
+  {
+    "keyword": "owner - current role",
+    "text": "Staff Software Engineer & AI Solutions Architect at Adam Matthew Steinberger LLC (03/2025 – Present). Leading enterprise AI automation and RAG deployments. Key projects: (1) AI Payroll Processor (GPT-5) – Full lifecycle redesign with Azure microservices, RAG, and HITL; (2) Local AI Infrastructure – Self-hosted Mistral-7B + FAISS RAG with OpenAI-compatible API and observability; (3) Cloud RAG Chatbot (Gemini) – Sales-optimized UI and SEO-targeted content engine. All projects include JIRA decomposition, documentation, and team handoff."
+  },
+  {
+    "keyword": "owner - previous roles",
+    "text": "Lima One Capital (05/2023 – 02/2025): Senior Software Engineer. Architected NestJS microservices, .NET/React mortgage platform, ETL pipelines (HubSpot, Snowflake, Salesforce), and Snow Portal (Snowflake job scheduler). Transcat (04/2022 – 01/2023): Led .NET/React calibration app and Magento integration. LeaseTrack (06/2021 – 04/2022): Built Python + AWS Textract ML document parser. Akmazio (05/2020 – 05/2021): Led C#/.NET backend for mobile networking. Bestpass (09/2019 – 04/2020): Delivered C# MVC toll billing system. NYSIF (03/2015 – 08/2019): Migrated VB6 to C# MVC, refactored EDI. Town & Country (07/2013 – 03/2015): Built C# ASP.NET insurance quoting tools."
+  },
+  {
+    "keyword": "owner - ai services",
+    "text": "Designs and deploys custom RAG systems using self-hosted (Mistral, LLaMa) or cloud (GPT, Gemini, Claude) LLMs. Services include: process discovery, architectural design, vector database setup (FAISS), prompt engineering, HITL workflows, OpenAI-compatible APIs (vLLM), observability (Grafana/Prometheus), and integration with n8n, Microsoft Graph, and enterprise tools. Delivers full documentation, JIRA boards, and team enablement for independent maintenance."
+  },
+  {
+    "keyword": "owner - architecture",
+    "text": "Specializes in event-driven microservices, RAG pipelines, onion architecture, and HITL automation. Builds with NestJS, Flask, .NET WebAPI, gRPC, REST, webhooks, message queues. Deploys via Docker, Azure Functions, AWS Lambdas, CI/CD. Expert in Azure Service Bus, Microsoft Graph, Snowflake, and third-party API integration. Focuses on scalability, observability, and long-term maintainability."
+  },
+  {
+    "keyword": "owner - server administration",
+    "text": "Deploys and manages cloud and bare-metal servers. Supports OpenWebUI, vLLM, Grafana, Prometheus, n8n, Postfix, Matrix/Element, Ghost, Listmonk. Uses Ubuntu Server, Docker, DNS routing, and automated monitoring for multi-domain, high-availability setups."
+  },
+  {
+    "keyword": "owner - privacy",
+    "text": "Helps clients deplatform from Big Tech with privacy-first infrastructure. Stack: Proton (email/calendar), Porkbun (DNS), Ubuntu, GrapheneOS, LineageOS, System76, Raspberry Pi, Synology. Advocates for data sovereignty, self-hosting, and decentralized systems."
+  },
+  {
+    "keyword": "owner - blockchain",
+    "text": "Operates ETH2 and Rocketpool validator nodes with privacy and decentralization focus. Offers node setup, uptime optimization, self-custody training, and web3 tooling on Ubuntu servers or VMs."
+  },
+  {
+    "keyword": "owner - soft skills",
+    "text": "Certified ScrumMaster. Expert in process engineering, solutions architecture, technical documentation, and team enablement. Known for transforming ambiguity into executable plans, mentoring junior devs, and delivering with clarity and humor."
+  },
+  {
+    "keyword": "owner - what i am not",
+    "text": "Not a frontend designer, hardware engineer, data engineer, or ML researcher. Does not work with PyTorch, TensorFlow, or deep learning model training."
+  },
+  {
+    "keyword": "owner - rates",
+    "text": "Hourly: $120/hr (standard), $150/hr+ (architecture/consulting), $175-250/hr (urgent). Projects: $5K-10K (RAG chatbots), $10K-25K+ (enterprise AI automation), $3K-8K (privacy/blockchain infra), $3K-5K/month (retainers)."
+  },
+  {
+    "keyword": "owner - nonprofit pricing",
+    "text": "Discounted rates and flexible scopes for nonprofits and mission-aligned organizations. Prioritizes privacy, sustainability, and long-term independence. Open to creative partnerships when values align."
+  },
+  {
+    "keyword": "custom chatbots - pitch",
+    "text": "Build secure, branded AI chatbots trained on your internal data. Automate content, qualify leads, integrate with Slack/CRMs. Live demo: https://chat.adam.matthewsteinberger.com"
+  },
+  {
+    "keyword": "custom chatbot - overview",
+    "text": "Custom chatbots are AI tools trained on your data—FAQs, SOPs, PDFs, emails—to deliver accurate, brand-aligned responses. Automate support, content, and workflows with full control and privacy."
+  },
+  {
+    "keyword": "custom chatbot - content automation",
+    "text": "Generate email campaigns, landing pages, ad copy, product descriptions, and legal disclaimers in your brand voice—fast, consistent, and on-demand."
+  },
+  {
+    "keyword": "custom chatbot - lead generation",
+    "text": "Engage visitors 24/7, qualify leads via conversation, capture contact info, and guide to CTAs or scheduling—fully automated."
+  },
+  {
+    "keyword": "custom chatbot - integration",
+    "text": "Integrates with Slack, Teams, Notion, HubSpot, Salesforce, n8n, Microsoft Graph. Supports APIs, webhooks, and custom workflows."
+  },
+  {
+    "keyword": "custom chatbot - training data",
+    "text": "Train on internal docs, support tickets, wikis, SOPs, PDFs, databases. Becomes a contextual expert in your knowledge base."
+  },
+  {
+    "keyword": "custom chatbot - brand voice",
+    "text": "Prompt engineering ensures consistent tone—casual, professional, witty, or corporate—across all interactions."
+  },
+  {
+    "keyword": "custom chatbot - security",
+    "text": "Self-hosted or cloud-hosted with full control. Supports auth, encryption, logging, SSO. Data never leaves your infrastructure."
+  },
+  {
+    "keyword": "custom chatbot - performance",
+    "text": "Uses efficient LLMs (Mistral, LLaMa, GPT) with vLLM, GPU acceleration, and optimized inference for fast, scalable responses."
+  },
+  {
+    "keyword": "custom chatbot - automation",
+    "text": "Trigger workflows, send emails, generate reports, schedule meetings, or deploy code via n8n or custom agents—all from chat."
+  },
+  {
+    "keyword": "custom chatbot - analytics",
+    "text": "Track usage, accuracy, and conversions with Grafana dashboards and custom logging."
+  },
+  {
+    "keyword": "custom chatbot - user empowerment",
+    "text": "Empowers non-technical teams (marketing, support, HR) to use AI without engineering support."
+  },
+  {
+    "keyword": "custom chatbot - scalability",
+    "text": "Scales with Docker, Kubernetes, load balancers, and CDN. From startup to enterprise."
+  },
+  {
+    "keyword": "custom chatbot - demo",
+    "text": "Live demo: https://chat.adam.matthewsteinberger.com — see real-time RAG, content generation, and lead flow."
+  },
+  {
+    "keyword": "use case - customer support",
+    "text": "Handle FAQs, refunds, onboarding 24/7. Reduce tickets and improve response time."
+  },
+  {
+    "keyword": "use case - internal knowledgebase",
+    "text": "Turn docs and SOPs into a conversational assistant. Eliminate repetitive questions."
+  },
+  {
+    "keyword": "integration - crm",
+    "text": "Sync with HubSpot/Salesforce: log chats, qualify leads, push deals to pipeline."
+  },
+  {
+    "keyword": "integration - Slack",
+    "text": "Deploy GPT in Slack for instant answers, content, and customer support."
+  },
+  {
+    "keyword": "security - self hosting",
+    "text": "Fully self-hosted RAG + LLM. Encrypted, VPN-accessible, local auth. Zero third-party data risk."
+  },
+  {
+    "keyword": "security - authentication",
+    "text": "Password, API key, or SSO. Role-based access for teams and clients."
+  },
+  {
+    "keyword": "customization - tone",
+    "text": "Train GPT in your exact brand voice via prompt engineering and instruction sets."
+  },
+  {
+    "keyword": "customization - data source",
+    "text": "Ingest PDFs, emails, wikis, chats. Bot becomes your company’s knowledge expert."
+  },
+  {
+    "keyword": "pricing - starter package",
+    "text": "Starter RAG Chatbot: $5K — data ingestion, brand voice, Slack integration, 1 month support."
+  },
+  {
+    "keyword": "pricing - enterprise package",
+    "text": "Enterprise AI Automation: $20K+ — custom infra, HITL, integrations, ongoing support."
+  },
+  {
+    "keyword": "deployment - website widget",
+    "text": "Embed as floating chat widget with CTAs, lead capture, and instant answers."
+  },
+  {
+    "keyword": "deployment - internal app",
+    "text": "Deploy in internal tools to accelerate workflows and reduce errors."
+  },
+  {
+    "keyword": "demo - request",
+    "text": "Send your docs — get a custom GPT demo in 48 hours."
+  },
+  {
+    "keyword": "demo - live site",
+    "text": "Live RAG demo: https://chat.adam.matthewsteinberger.com"
+  },
+  {
+    "keyword": "tech stack - llm",
+    "text": "Supports Mistral, LLaMa, GPT-5, Gemini, Claude. Hosted via vLLM, OpenWebUI, or custom APIs."
+  },
+  {
+    "keyword": "tech stack - automation",
+    "text": "n8n, Zapier, Microsoft Graph, Azure Service Bus. Trigger actions from chat."
+  },
+  {
+    "keyword": "partnership - agency",
+    "text": "White-label GPTs for agencies and SaaS. Volume pricing and co-marketing."
+  },
+  {
+    "keyword": "case study - payroll automation",
+    "text": "Built Azure RAG payroll processor for enterprise client. Automated ADP integration, reduced processing time 80%, enabled junior team handoff."
+  },
+  {
+    "keyword": "case study - nonprofit",
+    "text": "Deployed self-hosted Mistral RAG for nonprofit. Saved 30+ hrs/month on grant FAQs with full data privacy."
+  },
+  {
+    "keyword": "education",
+    "text": "B.A. Computer Science — Skidmore College (2012) | Certified ScrumMaster — ScrumAlliance (2021)"
+  }
+]
